@@ -211,3 +211,7 @@ data/
 
 #but keep the folder 
 !data/.gitkeep
+
+
+#ignore the virutal environment 
+env/
