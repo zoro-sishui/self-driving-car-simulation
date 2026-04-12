@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-CSV_PATH = os.path.join(os.path.dirname(__file__), '..', '..', 'data', 'data', 'driving_log.csv')
+CSV_PATH = os.path.join(os.path.dirname(__file__), '..', 'data', 'driving_log.csv')
 
 df = pd.read_csv(CSV_PATH, header=None)
 df.columns = ['center', 'left', 'right', 'steering', 'throttle', 'brake', 'speed']
@@ -28,6 +28,10 @@ for i in range(NUM_BINS):
 df_balanced = df.drop(index=remove_indices).reset_index(drop=True)
 print(f'Samples after balancing: {len(df_balanced)}')
 
+# --- Export balanced CSV ---
+BALANCED_CSV = os.path.join(os.path.dirname(__file__), '..', 'data', 'balanced_driving_log.csv')
+df_balanced.to_csv(BALANCED_CSV, index=False, header=False)
+
 # --- Side-by-side histograms ---
 fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
@@ -42,4 +46,9 @@ axes[1].set_xlabel('Steering Angle')
 axes[1].set_ylabel('Count')
 
 plt.tight_layout()
+
+# --- Export histogram image ---
+OUTPUT_IMG = os.path.join(os.path.dirname(__file__), '..', 'outputs', 'steering_histogram.png')
+plt.savefig(OUTPUT_IMG, dpi=150)
+
 plt.show()
