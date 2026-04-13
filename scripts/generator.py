@@ -6,6 +6,8 @@ from augmentation import augment
 
 def batch_generator(image_paths, steerings, batch_size, is_training=False):
     num_samples = len(image_paths)
+    """Generates batches of preporcess images and steerings   """
+    
 
     while True:
         indices = np.arange(num_samples)
