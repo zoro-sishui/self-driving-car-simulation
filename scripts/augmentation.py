@@ -26,7 +26,7 @@ def pan(img, steering):
     img = cv2.warpAffine(img, M, (w, h))
 
     # recover back to the center
-    steering += (dx / max_shift_x) * 0.2
+    steering += (dx / max_shift_x) * 0.4
     return img, steering
 
 

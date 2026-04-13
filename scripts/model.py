@@ -13,7 +13,7 @@ def nvidia_model():
 
     model = Sequential([
         # Normalization layer
-        Lambda(lambda x: x / 255.0, input_shape=(66, 200, 3)),
+        # Lambda(lambda x: x / 255.0, input_shape=(66, 200, 3)),
         # Convolutional layers
         Conv2D(24, (5, 5), strides=(2, 2), activation='relu'),
         Conv2D(36, (5, 5), strides=(2, 2), activation='relu'),
