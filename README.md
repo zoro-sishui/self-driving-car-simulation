@@ -70,6 +70,25 @@ python scripts/test.py
 
 This starts a Socket.IO server on port `4567` and loads `models/model.h5` for inference.
 
+---
+
+## Challenges & Solutions
+
+### Car steering toward the edge on turns
+
+**Problem:**
+During initial testing in the simulator, the car would drive normally on straight sections but would drive toward the edge of the road on turn. The model was not correcting its steering angle enough when curves appeared.
+
+**Root cause:**
+The training dataset was skewed toward straight driving, leaving the model with less exposure to turning scenarios. As a result it defaulted to minimal steering corrections and improperly drove around the curves.
+
+**How we fixed it:**
+We plotted a histogram of the steering angle distribution (`scripts/histogram.py`), which made the imbalance immediately visible. We applied undersampling by capping the number of samples per bin, producing a balanced dataset saved to `data/balanced_driving_log.csv`.
+
+Additionally, the `pan` augmentation in `scripts/augmentation.py` artificially shifts images left or right to simulate the car being off-centre. Since shifting the image changes where the car appears to be on the road, the steering label is updated to match: `steering += (dx / max_shift_x) * 0.4`. This teaches the model that being off-centre requires a corrective input, improving its ability to recover during turns rather than continuing straight off the road.
+
+---
+
 ### 5. Commit Message Guidelines
 
 Use clear commit messages in this format:
