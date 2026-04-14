@@ -51,6 +51,10 @@ def sendControl(steering, throttle):
     })
 
 if __name__ == "__main__":
-    model = load_model('model.h5')
+    model_path = os.path.join(os.path.dirname(__file__), '..', 'models', 'model.h5')
+    model_path = os.path.abspath(model_path)
+    if not os.path.exists(model_path):
+        raise FileNotFoundError(f'Model file not found: {model_path}')
+    model = load_model(model_path, safe_mode=False, compile=False)
     app = socketio.Middleware(sio, app)
     eventlet.wsgi.server(eventlet.listen(('', 4567)), app)
