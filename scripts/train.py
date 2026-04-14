@@ -10,6 +10,7 @@ from generator import batch_generator
 
 
 def train():
+    """Load data, train the model, and save the best checkpoint."""
     print("Loading data...")
     X_train, X_test, y_train, y_test = load_data()
 
@@ -69,7 +70,9 @@ def train():
 
 
 def plot_training_history(history):
-    # Compare train vs validation loss across epochs.
+    """
+    Compare train vs validation loss across epochs.
+    """
     plt.plot(history.history['loss'], label='train')
     plt.plot(history.history['val_loss'], label='val')
     plt.legend()
